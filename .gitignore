@@ -1,2 +1,3 @@
 *.pyc
 .ropeproject
+config_no_commit.py
