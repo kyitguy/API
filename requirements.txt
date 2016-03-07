@@ -1,0 +1,6 @@
+requests
+requests_oauthlib
+flask
+Flask-OAuthlib
+flask-sqlalchemy
+Flask-WTF

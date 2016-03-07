@@ -1,0 +1,42 @@
+---
+# Provisioning a dev box for drchrono
+
+- name: Configuring Base System
+  hosts: all
+  tasks:
+    - name: apt-get install stuff 
+      apt: pkg={{ item }} state=installed update_cache=true
+      become: yes
+      become_user: root
+      with_items:
+        - build-essential
+        - git
+        - python
+        - python-pip
+        - python-setuptools
+
+    - name: Create Dev Directory
+      file: path=/home/vagrant/development state=directory
+
+    - name: Checkout git repos
+      git: repo=ssh://git@github.com/kyitguy/{{ item }}.git dest=/home/vagrant/development/{{ item }} accept_hostkey=True
+      with_items:
+        - API
+
+    - name: Checkout git repos
+      git: repo=ssh://git@github.com/scorpionresponse/{{ item }}.git dest=/home/vagrant/development/{{ item }} accept_hostkey=True
+      with_items:
+        - dotfiles
+
+    - name: Make dotfiles install script executable
+      shell: chmod +x /home/vagrant/development/dotfiles/install_dotfiles.sh
+
+    - name: Install dotfiles
+      shell: /home/vagrant/development/dotfiles/install_dotfiles.sh
+
+    - name: pip install stuff
+      pip: name={{ item }}
+      become: yes
+      become_user: root
+      with_items:
+        - virtualenv 
