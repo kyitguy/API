@@ -13,6 +13,9 @@ system:
 the linux command line.  The same basic sequence of commands *should* work on
 Windows as well, but each command may be slightly different.
 
+**Note (another):** The "Redirect URI" field on the DrChrono API management
+page should be set to the value "http://localhost:5000/authorize"
+
 In the directory you wish to use for this project...
 
 1. Create a virtualenv and start it up:
