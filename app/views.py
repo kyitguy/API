@@ -7,7 +7,8 @@ from datetime import datetime
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html',
+    user = drchrono_api.get_current_user(session["access_token"])
+    return render_template('index.html', user=user,
                            login_uri=drchrono_api.authenticate_uri())
 
 

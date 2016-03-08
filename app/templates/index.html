@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% set active_page = "index" %}
 {% block content %}
-Login: <a href="{{ login_uri }}">Click to login</a>
+{% if user is none %}
+    Login: <a href="{{ login_uri }}">Click to login</a>
+{% else %}
+    You are logged in as {{ user.username }}.
+{% endif %}
 {% endblock %}

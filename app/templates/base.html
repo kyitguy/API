@@ -16,15 +16,38 @@
     <link rel="stylesheet" href="/static/css/main.css" />
   </head>
   <body>
-    <h1 id="header">{% block header %}Dr Chrono - Prototype{% endblock %}</h1>
-    <div id="messages-wrap">
-        <div id="messages">
-        {% for category, msg in get_flashed_messages(with_categories=true) %}
-            <p class="message flash-{{ category }}">{{ msg }}</p>
-        {% endfor %}
+    <body>
+{% set navigation_bar = [
+    ('index', 'Home'),
+    ('account', 'Account'),
+    ('offices', 'Offices'),
+    ('appointments', 'Appointments')
+] -%}
+{% set active_page = active_page|default('index') -%}
+
+    <nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url_for('index') }}">{% block header
+                %}Dr Chrono - Prototype{% endblock %}</a>
         </div>
+        <ul class="nav navbar-nav">
+            {% for id, caption in navigation_bar %}
+            <li{% if id == active_page %} class="active"{% endif %}><a href="{{ url_for(id) }}">{{ caption|e }}</a> </li>
+            {% endfor %}
+        </ul>
     </div>
-    <div id="content">{% block content %}{% endblock %}</div>
+    </nav>
+    <div class="container">
+        <div id="messages-wrap">
+            <div id="messages">
+            {% for category, msg in get_flashed_messages(with_categories=true) %}
+                <p class="message flash-{{ category }}">{{ msg }}</p>
+            {% endfor %}
+            </div>
+        </div>
+        <div id="content">{% block content %}{% endblock %}</div>
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
