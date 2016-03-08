@@ -44,6 +44,15 @@ def authorize(code):
     return (access_token, refresh_token, expires_in)
 
 
+def logout(access_token):
+
+    requests.post('https://drchrono.com/o/revoke_token/', data={
+        'client_id': app.config["DRCHRONO_APP_ID"],
+        'client_secret': app.config["DRCHRONO_APP_SECRET"],
+        'token': access_token
+    })
+
+
 def get_current_user(access_token):
     headers = {'Authorization': 'Bearer ' + access_token}
     r = requests.get("https://drchrono.com/api/users/current", headers=headers)
