@@ -1,5 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
-Office: {{ office }}
-Appointments: {{ appointments }}
+<h2>Appointments</h2>
+{% if office is not none %}
+    <div>
+        <h3>Showing appointments for office #{{ office.id }}</h3>
+        <h3>Office Info:</h3>
+        <dl>
+            {% for key, value in office.iteritems() %}
+            <dt>{{ key }}:</dt>
+            <dd>{{ value }}</dd>
+            {% endfor %}
+        </dl>
+    </div>
+{% else %}
+<div>
+    <h3>Showing appointments for all offices</h3>
+</div>
+{% endif %}
+
+<h3>List of appointments:</h3>
+{% for appointment in appointments.results %}
+<div>
+    <h3>Appointment #{{ loop.index }}</h3>
+    <dl>
+        {% for key, value in appointment.iteritems() %}
+        <dt>{{ key }}:</dt>
+        <dd>{{ value }}</dd>
+        {% endfor %}
+    </dl>
+</div>
+{% endfor %}
 {% endblock %}

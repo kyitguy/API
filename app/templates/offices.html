@@ -1,4 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-offices: {{ offices }}
+<h2>Offices</h2>
+{% for office in offices.results %}
+<div>
+    <h3>Office #{{ loop.index }}</h3>
+    Check for appointments at this office: 
+    <a href="/appointments/{{ office["id"] }}">Click Here</a><br>
+    <dl>
+        {% for key, value in office.iteritems() %}
+        <dt>{{ key }}:</dt>
+        <dd>{{ value }}</dd>
+        {% endfor %}
+    </dl>
+</div>
+{% endfor %}
 {% endblock %}
