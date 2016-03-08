@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Appointments</h2>
+<h2>Appointments for {{ date }}</h2>
 {% if office is not none %}
     <div>
         <h3>Showing appointments for office #{{ office.id }}</h3>

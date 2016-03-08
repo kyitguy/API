@@ -5,7 +5,7 @@
 <div>
     <h3>Office #{{ loop.index }}</h3>
     Check for appointments at this office: 
-    <a href="/appointments/{{ office["id"] }}">Click Here</a><br>
+    <a href="{{ url_for('appointments', office=office["id"]) }}">Click Here</a><br>
     <dl>
         {% for key, value in office.iteritems() %}
         <dt>{{ key }}:</dt>

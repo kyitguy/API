@@ -1,6 +1,5 @@
 from app import app
 from flask_oauthlib.client import OAuth
-from datetime import datetime
 import requests
 import urllib
 
@@ -64,11 +63,8 @@ def get_offices(access_token):
     return r.json()
 
 
-def get_appointments(access_token, office_id=None):
+def get_appointments(access_token, params=None):
     headers = {'Authorization': 'Bearer ' + access_token}
-    today = datetime.now().strftime('%Y-%m-%d')
-    request_url = "https://drchrono.com/api/appointments?date=" + today
-    if office_id is not None:
-        request_url = request_url + "&office=" + str(office_id)
-    r = requests.get(request_url, headers=headers)
+    r = requests.get("https://drchrono.com/api/appointments",
+                     headers=headers, params=params)
     return r.json()

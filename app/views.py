@@ -1,6 +1,7 @@
 from app import app
 from flask import flash, redirect, url_for, session, request, render_template
 from .drchrono_api import api as drchrono_api
+from datetime import datetime
 
 
 @app.route('/')
@@ -42,14 +43,20 @@ def offices():
 
 
 @app.route('/appointments')
-@app.route('/appointments/<int:office_id>')
-def appointments(office_id=None):
+def appointments():
+    office_id = request.args.get('office', None)
     office = None
     if office_id is not None:
         office = drchrono_api.get_office_info(session["access_token"],
                                               office_id)
 
+    params = dict(request.args)
+    date = request.args.get('date', None)
+    if date is None:
+        date = datetime.now().strftime('%Y-%m-%d')
+        params["date"] = date
+
     appointments = drchrono_api.get_appointments(session["access_token"],
-                                                 office_id)
-    return render_template('appointments.html', office=office,
+                                                 params)
+    return render_template('appointments.html', office=office, date=date,
                            appointments=appointments)
