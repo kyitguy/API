@@ -18,6 +18,10 @@ def login_required(f):
 @app.route('/')
 @app.route('/index')
 def index():
+    if 'access_token' not in session:
+        return render_template('index.html', user=None,
+                               login_uri=drchrono_api.authenticate_uri())
+
     user = drchrono_api.get_current_user(session["access_token"])
     if 'error' in user:
         user = None
